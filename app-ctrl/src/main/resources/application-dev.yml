@@ -1,0 +1,27 @@
+server:
+  port: 8910
+
+logging:
+  level:
+    com.app.ctrl: debug
+  file:
+    #name：/spring-boot-dubbo/logs/app-ctrl.log
+    name: E:/WorkSpace/IDEWorkSpace/spring-boot-dubbo/logs/app-ctrl.log
+
+spring:
+  mvc:
+    # 出现错误时, 直接抛出异常
+    throw-exception-if-no-handler-found: true
+  #不开启默认的资源处理(404异常可以获取到)
+  resources:
+    add-mappings: false
+
+dubbo:
+  application:
+    id: app-ctrl
+    name: app-ctrl
+  registry:
+    protocol: zookeeper
+    address: 127.0.0.1
+    port: 2181
+

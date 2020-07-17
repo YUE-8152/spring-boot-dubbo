@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 引入第三方依赖包 此路径需要改下 -->
+    <classPathEntry
+            location="D:\Software\Maven\localRepository\mysql\mysql-connector-java\5.1.48\mysql-connector-java-5.1.48.jar"/>
+
+    <!--targetRuntime常用值:
+        MyBatis3Simple(只生成基本的CRUD和少量的动态SQL)
+        MyBatis3(生成完整的CRUD，包含CriteriaAPI方法Example后缀的方法)
+     -->
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!-- 不生成注解 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--此处数据库需要改为自己的-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mydb?serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!-- 是否使用BigDecimal，false可自动转换（Long,Integer,Short） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类 目录结构按照自己的需要 -->
+        <javaModelGenerator targetPackage="com.app.api.model"
+                            targetProject="E:\WorkSpace\IDEWorkSpace\spring-boot-dubbo\app-api\src\main\java">
+            <!-- 是否允许子包 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
+            <property name="trimStrings" value="false"/>
+            <!-- 建立modal对象是否不可改变 即生成的modal对象不会有setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成XML Mapper 目录结构按照自己需要设置 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="E:\WorkSpace\IDEWorkSpace\spring-boot-dubbo\app-order-service\src\main\resources">
+            <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 生成Mapper接口 -->
+        <!-- 生成的Mapper类型：ANNOTATEDMAPPER（注解）、MIXEDMAPPER（混合）、XMLMAPPER（XML） -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.app.user.dao"
+                             targetProject="E:\WorkSpace\IDEWorkSpace\spring-boot-dubbo\app-order-service\src\main\java">
+            <!-- 是否将数据库中的schema作为包名的一部分，默认就是false -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 需要生成的实体类对应的表名，多个实体类复制多份该配置即可 -->
+        <table tableName="order_item" domainObjectName="OrderItem" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!-- 是否用数据库中的字段名作为POJO属性名(不自动转小驼峰)，默认值是false -->
+            <property name="useActualColumnNames" value="false"/>
+
+            <!-- 生成代码时支持获取插入数据后自增的ID， 需要通过sqlStatement配置数据库类型。 -->
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+
+            <!-- 此标签用于在生成代码时忽略数据库中的某个字段 -->
+            <!-- <ignoreColumn column="FRED" /> -->
+
+            <!-- 通过此标签重写mybatis从数据库读到的元信息，自定义列相关配置，包括(名称、类型) -->
+            <!-- <columnOverride column="aa" property="sname" /> -->
+        </table>
+    </context>
+</generatorConfiguration>
